@@ -9,12 +9,15 @@ import java.util.Arrays;
  * DAO란 db를 사용해 데이터를 조회하거나 조작하는 기능을 가진 오브젝트
  */
 public class UserDao {
-    private static final String url = "jdbc:mysql://localhost:3306/toby";
-    private static final String name = "root";
-    private static final String password = "root";
+
+    private ConnectionMaker connectionMaker;
+
+    public void setConnectionMakeer(ConnectionMaker connectionMakeer) {
+        this.connectionMaker = connectionMakeer;
+    }
 
     public void add(User user) throws SQLException {
-        Connection con = getConnection();
+        Connection con = connectionMaker.getConnection();
         PreparedStatement pstmt = con.prepareStatement("insert into users(id,name,password) values(?,?,?)");
         pstmt.setString(1, user.getId());
         pstmt.setString(2, user.getName());
@@ -27,7 +30,7 @@ public class UserDao {
 
 
     public User get(String id) throws SQLException {
-        Connection con = getConnection();
+        Connection con = connectionMaker.getConnection();
         PreparedStatement pstmt = con.prepareStatement("select * from users where id=?");
         pstmt.setString(1, id);
 
@@ -43,20 +46,6 @@ public class UserDao {
         return user;
     }
 
-    private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, name, password);
-    }
 
-    public static void main(String[] args) throws SQLException {
-        UserDao userDao = new UserDao();
-        User user = new User();
-        user.setId("whiteShip");
-        user.setName("백기선");
-        user.setPassword("married");
 
-        userDao.add(user);
-        System.out.println(user.getId() + " 등록 성공");
-        User user2 = userDao.get(user.getId());
-        System.out.println("user2.getName() = " + user2.getName());
-    }
 }
