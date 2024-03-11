@@ -12,7 +12,7 @@ public class UserDao {
 
     private ConnectionMaker connectionMaker;
 
-    public void setConnectionMakeer(ConnectionMaker connectionMakeer) {
+    public void setConnectionMaker(ConnectionMaker connectionMakeer) {
         this.connectionMaker = connectionMakeer;
     }
 
