@@ -4,6 +4,7 @@ import com.springbook.practice.dao.UserDao;
 import com.springbook.practice.domain.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.sql.SQLException;
 
@@ -19,8 +20,14 @@ public class UserDaoTest {
         user.setPassword("married");
 
 //        userDao.add(user);
-        System.out.println(user.getId() + " 등록 성공");
         User user2 = userDao.get(user.getId());
+        if(!user.getName().equals(user2.getName())){
+            System.out.println("테스트 실패");
+        }
         System.out.println("user2.getName() = " + user2.getName());
+    }
+
+    public void addAndGet(){
+
     }
 }
