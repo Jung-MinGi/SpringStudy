@@ -1,5 +1,6 @@
 package com.springbook.practice;
 
+import com.springbook.practice.dao.MyCustomJdbcTemplate;
 import com.springbook.practice.dao.StatementStrategy;
 import com.springbook.practice.dao.UserDao;
 import com.springbook.practice.domain.User;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -25,6 +27,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class UserDaoTest {
     @Autowired
     private UserDao userDao;
+
+
     private User user1;
     private User user2;
     private User user3;
@@ -58,17 +62,12 @@ class UserDaoTest {
     @Test
     @DisplayName("Jdbc 전략패턴 분리 삭제 메서드 테스트")
     public void jdbcStrategy() throws SQLException {
+
         userDao.deleteAll();
         userDao.add(user1);
         userDao.add(user2);
         Assertions.assertThat(userDao.getCount()).isEqualTo(2);
-        userDao.jdbcContextWithStatementStrategy(new StatementStrategy() {
-            @Override
-            public PreparedStatement makePreparedStatement(Connection con) throws SQLException {
-                String sql = "delete from users";
-                return con.prepareStatement(sql);
-            }
-        });
+        userDao.deleteAll();
         Assertions.assertThat(userDao.getCount()).isEqualTo(0);
     }
 
