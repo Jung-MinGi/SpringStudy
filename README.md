@@ -5,6 +5,8 @@ http://mk-blog-env.ap-northeast-2.elasticbeanstalk.com/view/spring/5 <br>
 http://mk-blog-env.ap-northeast-2.elasticbeanstalk.com/view/spring/6 <br>
 🧐 JDBCTemplate 사용된 템플릿/콜백패턴 <br>
 http://mk-blog-env.ap-northeast-2.elasticbeanstalk.com/view/spring/8 <br>
+🧐 스프링 데이터 액세스 예외 추상화 <br> 
+
 ## 디자인패턴
 🧐 템플릿 메서드 패턴<br>
 
