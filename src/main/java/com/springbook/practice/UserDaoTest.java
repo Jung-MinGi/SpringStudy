@@ -4,7 +4,6 @@ import com.springbook.practice.dao.UserDao;
 import com.springbook.practice.domain.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.sql.SQLException;
 

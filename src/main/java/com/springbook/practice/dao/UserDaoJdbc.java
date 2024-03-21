@@ -1,5 +1,6 @@
 package com.springbook.practice.dao;
 
+import com.springbook.practice.domain.Level;
 import com.springbook.practice.domain.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -21,6 +22,9 @@ public class UserDaoJdbc implements UserDao{
             user.setId(rs.getString("id"));
             user.setName(rs.getString("name"));
             user.setPassword(rs.getString("password"));
+            user.setLevel(Level.valueOf(rs.getInt("Level")));
+            user.setLogin(rs.getInt("Login"));
+            user.setRecommend(rs.getInt("Recommend"));
             return user;
         }
     };
@@ -36,9 +40,10 @@ public class UserDaoJdbc implements UserDao{
     }
 
     public void add(User user){
-        String sql = "insert into users(id,name,password) values(?,?,?)";
-        template.update(sql, user.getId(), user.getName(), user.getPassword());
+        String sql = "insert into users(id,name,password,Level,Login,Recommend) values(?,?,?,?,?,?)";
+        template.update(sql, user.getId(), user.getName(), user.getPassword(),user.getLevel().intValue(),user.getLogin(),user.getRecommend());
     }
+
 
 
     public User get(String id) {
@@ -58,5 +63,11 @@ public class UserDaoJdbc implements UserDao{
     public List<User> getAll() {
         return template.query("select * from users order by id", userMapper);
 
+    }
+
+    @Override
+    public void update(User user) {
+        String sql ="update users set name=?, password=?,Level=?,Login=?,Recommend=? where id=?";
+        template.update(sql,user.getName(),user.getPassword(),user.getLevel().intValue(),user.getLogin(),user.getRecommend(),user.getId());
     }
 }

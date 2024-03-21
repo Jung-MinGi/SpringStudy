@@ -12,4 +12,13 @@
     <bean id="userDao" class="com.springbook.practice.dao.UserDaoJdbc">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+    <bean id="userService" class="com.springbook.practice.service.UserService">
+        <property name="userDao" ref="userDao"/>
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 </beans>

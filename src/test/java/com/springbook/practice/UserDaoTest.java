@@ -1,6 +1,7 @@
 package com.springbook.practice;
 
 import com.springbook.practice.dao.UserDao;
+import com.springbook.practice.domain.Level;
 import com.springbook.practice.domain.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,9 +41,9 @@ class UserDaoTest {
 
     @BeforeEach
     void before() {
-        user1 = new User("test1", "tester1", "1111");
-        user2 = new User("test2", "tester2", "2222");
-        user3 = new User("test3", "tester3", "3333");
+        user1 = new User("test1", "tester1", "1111", Level.BASIC,1,0);
+        user2 = new User("test2", "tester2", "2222",Level.SILVER,55,10);
+        user3 = new User("test3", "tester3", "3333",Level.GOLD,100,40);
     }
 
     @Test
@@ -122,10 +123,31 @@ class UserDaoTest {
             Assertions.assertThat(dataAccessException).isInstanceOf(DuplicateKeyException.class);
         }
     }
+    @Test
+    @DisplayName("user 수정 메서드")
+    public void update(){
+        userDao.deleteAll();
+
+        userDao.add(user1);
+
+        user1.setName("ohminkyu");
+        user1.setPassword("4444");
+        user1.setLevel(Level.GOLD);
+        user1.setLogin(1000);
+        user1.setRecommend(999);
+        userDao.update(user1);
+
+        User ret = userDao.get(user1.getId());
+        checkProperty(ret,user1);
+    }
+
 
     private void checkProperty(User user, User comp) {
         assertThat(user.getId()).isEqualTo(comp.getId());
         assertThat(user.getName()).isEqualTo(comp.getName());
         assertThat(user.getPassword()).isEqualTo(comp.getPassword());
+        assertThat(user.getLevel()).isEqualTo(comp.getLevel());
+        assertThat(user.getLogin()).isEqualTo(comp.getLogin());
+        assertThat(user.getRecommend()).isEqualTo(comp.getRecommend());
     }
 }
