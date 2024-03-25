@@ -13,13 +13,18 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="userService" class="com.springbook.practice.service.UserService">
+    <bean id="userServiceImpl" class="com.springbook.practice.service.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
-        <property name="transactionManager" ref="transactionManager"/>
-
+        <property name="mailSender" ref="mailSender"/>
     </bean>
 
+    <bean id="userService" class="com.springbook.practice.service.UserServiceTx">
+        <property name="userService" ref="userServiceImpl"/>
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+    <bean id="mailSender" class="com.springbook.practice.service.DummyMailSender"/>
 </beans>

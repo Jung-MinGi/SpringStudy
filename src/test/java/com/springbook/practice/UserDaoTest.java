@@ -18,9 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,9 +39,9 @@ class UserDaoTest {
 
     @BeforeEach
     void before() {
-        user1 = new User("test1", "tester1", "1111", Level.BASIC,1,0);
-        user2 = new User("test2", "tester2", "2222",Level.SILVER,55,10);
-        user3 = new User("test3", "tester3", "3333",Level.GOLD,100,40);
+        user1 = new User("test1", "tester1", "1111", Level.BASIC, 1, 0, "tester1@naver.com");
+        user2 = new User("test2", "tester2", "2222", Level.SILVER, 55, 10, "tester2@naver.com");
+        user3 = new User("test3", "tester3", "3333", Level.GOLD, 100, 40, "tester3@naver.com");
     }
 
     @Test
@@ -116,16 +114,17 @@ class UserDaoTest {
         userDao.add(user1);
         try {
             userDao.add(user1);
-        }catch (DuplicateKeyException e){
+        } catch (DuplicateKeyException e) {
             SQLExceptionTranslator translator = new SQLErrorCodeSQLExceptionTranslator(dataSource);
             SQLException sqlException = (SQLException) e.getRootCause();
-            DataAccessException dataAccessException = translator.translate(null,null,sqlException);
+            DataAccessException dataAccessException = translator.translate(null, null, sqlException);
             Assertions.assertThat(dataAccessException).isInstanceOf(DuplicateKeyException.class);
         }
     }
+
     @Test
     @DisplayName("user 수정 메서드")
-    public void update(){
+    public void update() {
         userDao.deleteAll();
 
         userDao.add(user1);
@@ -138,7 +137,7 @@ class UserDaoTest {
         userDao.update(user1);
 
         User ret = userDao.get(user1.getId());
-        checkProperty(ret,user1);
+        checkProperty(ret, user1);
     }
 
 
@@ -149,5 +148,6 @@ class UserDaoTest {
         assertThat(user.getLevel()).isEqualTo(comp.getLevel());
         assertThat(user.getLogin()).isEqualTo(comp.getLogin());
         assertThat(user.getRecommend()).isEqualTo(comp.getRecommend());
+        assertThat(user.getEmail()).isEqualTo(comp.getEmail());
     }
 }

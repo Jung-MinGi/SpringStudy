@@ -17,5 +17,5 @@ public interface UserDao {
 
     public List<User> getAll();
 
-    void update(User user1);
+    void update(User user);
 }

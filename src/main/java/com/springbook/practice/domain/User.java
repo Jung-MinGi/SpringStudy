@@ -10,23 +10,19 @@ public class User {
     public Level level;
     public int login;
     public int recommend;
+    public String email;
 
-    public User(String id, String name, String password) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-    }
-
-    public User() {
-    }
-
-    public User(String id, String name, String password, Level level, int login, int recommend) {
+    public User(String id, String name, String password, Level level, int login, int recommend, String email) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.level = level;
         this.login = login;
         this.recommend = recommend;
+        this.email = email;
+    }
+
+    public User() {
     }
     public void upgradeLevel(){
         Level nextLevel = this.level.nextLevel();
