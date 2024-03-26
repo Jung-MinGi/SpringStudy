@@ -27,4 +27,8 @@
     </bean>
 
     <bean id="mailSender" class="com.springbook.practice.service.DummyMailSender"/>
+
+    <bean id="notCreateByConstructor" class="com.springbook.practice.factoryBean.NotCreateByConstructorFactoryBean">
+        <property name="value" value="FactoryBean!!"/>
+    </bean>
 </beans>

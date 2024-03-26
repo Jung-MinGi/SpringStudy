@@ -9,13 +9,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.MailSender;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -155,15 +155,24 @@ class UserServiceTest {
         testUserService.setUserDao(userDao);
         testUserService.setMailSender(mailSender);
 
-        UserServiceTx userServiceTx = new UserServiceTx();
-        userServiceTx.setTransactionManager(transactionManager);
-        userServiceTx.setUserService(testUserService);
+//        UserServiceTx userServiceTx = new UserServiceTx();
+//        userServiceTx.setTransactionManager(transactionManager);
+//        userServiceTx.setUserService(testUserService);
+        TransactionHandler transactionHandler = new TransactionHandler();
+        transactionHandler.setTransactionManager(transactionManager);
+        transactionHandler.setTarget(testUserService);
+        transactionHandler.setPattern("upgradeLevels");
 
+        UserService userServiceDTx = (UserService) Proxy.newProxyInstance(
+                getClass().getClassLoader()
+                , new Class[]{UserService.class}
+                , transactionHandler
+        );
         userDao.deleteAll();
         for (User user : users) {
             userDao.add(user);
         }
-        Assertions.assertThatThrownBy(userServiceTx::upgradeLevels)
+        Assertions.assertThatThrownBy(userServiceDTx::upgradeLevels)
                 .isInstanceOf(TestUserServiceException.class);
 
         checkLevel(users.get(1), false);

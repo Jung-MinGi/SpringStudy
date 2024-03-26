@@ -28,4 +28,8 @@
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="mail.server.com"/>
     </bean>
+
+    <bean id="notCreateByConstructor" class="com.springbook.practice.factoryBean.NotCreateByConstructorFactoryBean">
+        <property name="value" value="FactoryBean!!"/>
+    </bean>
 </beans>
