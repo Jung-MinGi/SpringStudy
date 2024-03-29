@@ -15,6 +15,7 @@ public class BitcoinTarget implements Bitcoin {
             RestTemplate restTemplate = new RestTemplate();
             String forObject = restTemplate.getForObject(new URI("https://api.upbit.com/v1/ticker?markets=KRW-BTC"), String.class);
             ObjectMapper objectMapper = new ObjectMapper();
+
             JsonNode jsonNode = objectMapper.readTree(forObject);
             String s = jsonNode.findValuesAsText("trade_price").get(0);
             double l = Double.parseDouble(s);

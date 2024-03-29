@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService {
                 upgradeLevel(user);
             }
         }
-
     }
 
     protected void upgradeLevel(User user) {

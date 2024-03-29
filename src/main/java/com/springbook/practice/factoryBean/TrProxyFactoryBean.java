@@ -1,7 +1,8 @@
 package com.springbook.practice.factoryBean;
 
 import com.springbook.practice.service.TransactionHandler;
-import com.springbook.practice.service.UserService;
+import org.springframework.aop.ClassFilter;
+import org.springframework.aop.support.NameMatchMethodPointcut;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -30,15 +31,15 @@ public class TrProxyFactoryBean implements FactoryBean<Object> {
     }
 
     @Override
-    public Object getObject() throws Exception {
+    public Object getObject() {
         TransactionHandler transactionHandler = new TransactionHandler();
         transactionHandler.setTarget(target);
         transactionHandler.setTransactionManager(transactionManager);
-        transactionHandler.setPattern("upgradeLevels");
+        transactionHandler.setPattern(pattern);
 
         return Proxy.newProxyInstance(
                 getClass().getClassLoader()
-                , new Class[]{UserService.class}
+                , new Class[]{serviceInterface}
                 , transactionHandler
         );
     }

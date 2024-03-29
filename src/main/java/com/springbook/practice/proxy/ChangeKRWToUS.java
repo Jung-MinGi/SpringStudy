@@ -10,6 +10,9 @@ public class ChangeKRWToUS implements InvocationHandler {
         this.target = target;
     }
 
+    public ChangeKRWToUS() {
+    }
+
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         int price = (int) method.invoke(target);

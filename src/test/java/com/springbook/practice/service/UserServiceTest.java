@@ -3,12 +3,16 @@ package com.springbook.practice.service;
 import com.springbook.practice.dao.UserDao;
 import com.springbook.practice.domain.Level;
 import com.springbook.practice.domain.User;
+import com.springbook.practice.factoryBean.TrProxyFactoryBean;
+import net.bytebuddy.implementation.auxiliary.AuxiliaryType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.mail.MailSender;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -16,6 +20,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Proxy;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,26 +33,23 @@ import static com.springbook.practice.service.UserServiceImpl.MIN_RECOMMEND_FOR_
 @ContextConfiguration(locations = "classpath:test-applicationContext.xml")
 class UserServiceTest {
     @Autowired
+    ApplicationContext context;
+    @Autowired
     private UserService userService;
-    //    @Autowired
-//    private UserServiceImpl userServiceImpl;
+    @Autowired
+    private UserService testUserService;
+
     @Autowired
     private UserDao userDao;
     @Autowired
     private MailSender mailSender;
 
-    @Autowired
-    private DataSource dataSource;
-    @Autowired
-    private PlatformTransactionManager transactionManager;
     List<User> users;
 
-    static class TestUserService extends UserServiceImpl {
-        private String id;
+    static class TestUserServiceImpl extends UserServiceImpl {
+        private String id="test4";
 
-        private TestUserService(String id) {
-            this.id = id;
-        }
+
 
         @Override
         protected void upgradeLevel(User user) {
@@ -151,31 +153,28 @@ class UserServiceTest {
     @Test
     @DisplayName("레벨 업그레이드 롤백 확인")
     public void upgradeAllOrNothing() {
-        TestUserService testUserService = new TestUserService(users.get(3).getId());
-        testUserService.setUserDao(userDao);
-        testUserService.setMailSender(mailSender);
+        System.out.println(testUserService.getClass());
 
-//        UserServiceTx userServiceTx = new UserServiceTx();
-//        userServiceTx.setTransactionManager(transactionManager);
-//        userServiceTx.setUserService(testUserService);
-        TransactionHandler transactionHandler = new TransactionHandler();
-        transactionHandler.setTransactionManager(transactionManager);
-        transactionHandler.setTarget(testUserService);
-        transactionHandler.setPattern("upgradeLevels");
 
-        UserService userServiceDTx = (UserService) Proxy.newProxyInstance(
-                getClass().getClassLoader()
-                , new Class[]{UserService.class}
-                , transactionHandler
-        );
+//        ProxyFactoryBean bean = context.getBean("&userService", ProxyFactoryBean.class);
+//        bean.setTarget(testUserService);
+//        UserService dynamicProxy = context.getBean("userService", UserService.class);
+//        UserService dynamicProxy =(UserService) bean.getObject();
+
         userDao.deleteAll();
         for (User user : users) {
             userDao.add(user);
         }
-        Assertions.assertThatThrownBy(userServiceDTx::upgradeLevels)
+        Assertions.assertThatThrownBy(testUserService::upgradeLevels)
                 .isInstanceOf(TestUserServiceException.class);
 
         checkLevel(users.get(1), false);
+    }
+    @Test
+    @DisplayName("자동 프록시 생성 확인")
+    public void autoProxyCreate(){
+        Assertions.assertThat(testUserService).isInstanceOf(Proxy.class);
+        Assertions.assertThat(userService).isInstanceOf(Proxy.class);
     }
 
     public void checkUpgradeLevel(User user, String expectedId, Level expectedLevel) {
