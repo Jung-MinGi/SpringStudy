@@ -30,7 +30,8 @@ public class ApplicationContextTest {
     @DisplayName("동일한 컨테이너인지 확인2")
     public void test2() {
         Assertions.assertThat(set.add(context)).isFalse();
-    }@Test
+    }
+    @Test
     @DisplayName("동일한 컨테이너인지 확인3")
     public void test3() {
         Assertions.assertThat(set.add(context)).isFalse();

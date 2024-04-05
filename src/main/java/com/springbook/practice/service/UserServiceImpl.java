@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         mailSender.send(mailMessage);
     }
 
-    private boolean canUpgradeLevel(User user) {
+    public boolean canUpgradeLevel(User user) {
         Level currentLevel = user.getLevel();
         switch (currentLevel) {
             case BASIC:
@@ -65,4 +65,12 @@ public class UserServiceImpl implements UserService {
         if (user.getLevel() == null) user.setLevel(Level.BASIC);
         userDao.add(user);
     }
+    @Override
+    public User get(String id) {return userDao.get(id);}
+    @Override
+    public void deleteAll() {userDao.deleteAll();}
+    @Override
+    public List<User> getAll() {return userDao.getAll();}
+    @Override
+    public void update(User user) {userDao.update(user);}
 }

@@ -16,7 +16,6 @@ public class TransactionHandler implements InvocationHandler {
     public void setTransactionManager(PlatformTransactionManager transactionManager) {
         this.transactionManager = transactionManager;
     }
-
     public void setPattern(String pattern) {
         this.pattern = pattern;
     }

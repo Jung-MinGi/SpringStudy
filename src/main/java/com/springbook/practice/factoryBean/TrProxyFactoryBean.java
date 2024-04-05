@@ -32,6 +32,7 @@ public class TrProxyFactoryBean implements FactoryBean<Object> {
 
     @Override
     public Object getObject() {
+
         TransactionHandler transactionHandler = new TransactionHandler();
         transactionHandler.setTarget(target);
         transactionHandler.setTransactionManager(transactionManager);

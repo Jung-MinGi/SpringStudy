@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 class BitcoinTargetProxyTest {
     @Test
     void proxyFactoryBean() throws URISyntaxException, JsonProcessingException {
+
         ProxyFactoryBean proxyFactoryBean = new ProxyFactoryBean();
         proxyFactoryBean.setTarget(new BitcoinTarget());
         proxyFactoryBean.addAdvice(new ChangeKRWToUSAdvice());
@@ -19,13 +20,13 @@ class BitcoinTargetProxyTest {
         System.out.println("price = " + price);
     }
 
-static class ChangeKRWToUSAdvice implements MethodInterceptor {
+    static class ChangeKRWToUSAdvice implements MethodInterceptor {
 
 
-    @Override
-    public Object invoke(MethodInvocation invocation) throws Throwable {
-        int ret = (int) invocation.proceed();
-        return ret/1300;
+        @Override
+        public Object invoke(MethodInvocation invocation) throws Throwable {
+            int ret = (int) invocation.proceed();
+            return ret / 1300;
+        }
     }
-}
 }
