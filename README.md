@@ -1,5 +1,5 @@
 ## spring
-🧐 스프링 ioc 전략<br>
+🧐 [스프링 ioc 전략](https://github.com/Jung-MinGi/SpringStudy/blob/master/springIoc.md)
 http://mk-blog-env.ap-northeast-2.elasticbeanstalk.com/view/spring/5 <br>
 🧐 applicationContext에 오브젝트 의존관계 설정정보를 넘기는 방법<br>
 http://mk-blog-env.ap-northeast-2.elasticbeanstalk.com/view/spring/6 <br>
