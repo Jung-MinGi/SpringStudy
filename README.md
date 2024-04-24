@@ -5,10 +5,10 @@
 
 * [JDBCTemplate에 사용된 템플릿/콜백패턴](https://github.com/Jung-MinGi/SpringStudy/blob/master/JDBCTemplate.md)
   
-* 스프링 트랜잭션 추상화API <br>
-http://mk-blog-env.ap-northeast-2.elasticbeanstalk.com/view/spring/4 <br>
-*private생성자를 빈으로 등록하고 싶을땐 팩토리빈을 사용한다 <br>
-http://mk-blog-env.ap-northeast-2.elasticbeanstalk.com/view/spring/11 <br>
+* [스프링 트랜잭션 추상화API](https://github.com/Jung-MinGi/SpringStudy/blob/master/springTransactionAPI.md)
+
+* [private생성자를 빈으로 등록하고 싶을땐 팩토리빈을 사용한다](https://github.com/Jung-MinGi/SpringStudy/blob/master/factoryBean.md)
+
 * 다이내믹 프록시와 팩토리 빈을 활용한 다이내믹프록시 생성 전략<br>
 http://mk-blog-env.ap-northeast-2.elasticbeanstalk.com/view/spring/10 <br>
 * ProxyFactoryBean과 빈 후처리기를 활용한 자동 프록시 생성 <br>
