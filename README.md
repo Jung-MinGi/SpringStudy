@@ -11,5 +11,4 @@
 
 * [다이내믹 프록시와 팩토리 빈을 활용한 다이내믹프록시 생성 전략](https://github.com/Jung-MinGi/SpringStudy/blob/master/%EB%8B%A4%EC%9D%B4%EB%82%B4%EB%AF%B9%20%ED%94%84%EB%A1%9D%EC%8B%9C.md)
 
-* ProxyFactoryBean과 빈 후처리기를 활용한 자동 프록시 생성 <br>
-http://mk-blog-env.ap-northeast-2.elasticbeanstalk.com/view/spring/12 <br>
+* [ProxyFactoryBean과 빈 후처리기를 활용한 자동 프록시 생성](https://github.com/Jung-MinGi/SpringStudy/blob/master/ProxyFactoryBean%EA%B3%BC%20%EB%B9%88%20%ED%9B%84%EC%B2%98%EB%A6%AC%EA%B8%B0%EB%A5%BC%20%ED%99%9C%EC%9A%A9%ED%95%9C%20%EC%9E%90%EB%8F%99%20%ED%94%84%EB%A1%9D%EC%8B%9C%20%EC%83%9D%EC%84%B1.md)
