@@ -9,6 +9,15 @@
 컨테이너를 오브젝트를 다루는 기능만으로 보면 빈팩토리에 가깝고
 더 넓게 보면 ApplicationContext라고 보면 된다.
 ```
+
+* 설정 메타정보
+ ```
+  StaticApplicationContext ac = new StaticApplicationContext(); // 컨테이너 생성됨
+ ```
+위 컨테이너는 아무일도 하지 않는 빈 컨테이너이다.<br>
+컨테이너가 일을 하려면 POJO클래스와 설정 메타정보가 필요하다.<br>
+> POJO클래스- 애플리케이션의 핵심 코드를 담고 있는 클래스<br>
+
 🧐@Configuration
 
 스프링이 빈 팩토리(or applicationContext)를 위한 오브젝트 설정을 담당하는 클래스라고 인식할 수 있다
